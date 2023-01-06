@@ -1,15 +1,15 @@
-import express, { Express, Request, Response } from "express";
 import dotenv from "dotenv";
+import { buildApp } from "./src/app";
 
 dotenv.config();
 
-const app: Express = express();
 const port = process.env.PORT || 3000;
 
-app.get("/", (req: Request, res: Response) => {
-  res.json({ msg: "Hello World, Soliddev!" });
-});
+async function start() {
+  const app = await buildApp();
+  app.listen(port, () => {
+    console.log(`Example app listening on port ${port}`);
+  });
+}
 
-app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`);
-});
+void start();
