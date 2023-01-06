@@ -13,10 +13,19 @@ describe("create workouts api", () => {
     await request(app)
       .post("/api/workouts")
       .set("Accept", "application/json")
+      .set("Authorization", "Bearer 123")
       .send({
         name: "My Workout",
         date: "2021-01-01 00:00:00",
       })
       .expect(200);
+  });
+
+  test("unauthorized", async () => {
+    const { app } = await setup();
+    await request(app)
+      .post("/api/workouts")
+      .set("Accept", "application/json")
+      .expect(401);
   });
 });
