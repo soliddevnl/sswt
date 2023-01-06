@@ -18,7 +18,12 @@ describe("create workouts api", () => {
         name: "My Workout",
         date: "2021-01-01 00:00:00",
       })
-      .expect(200);
+      .expect(200)
+      .expect({
+        id: 1,
+        name: "My Workout",
+        date: "2021-01-01 00:00:00",
+      });
   });
 
   test("unauthorized", async () => {
