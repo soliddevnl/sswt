@@ -14,6 +14,10 @@ async function buildApp() {
     res.json([]);
   });
 
+  app.post("/api/workouts", (req: Request, res: Response) => {
+    res.json({ id: 1, name: "My Workout", date: "2021-01-01 00:00:00" });
+  });
+
   return app;
 }
 
