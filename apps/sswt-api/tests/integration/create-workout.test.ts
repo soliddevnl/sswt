@@ -11,7 +11,7 @@ describe("create workouts api", () => {
   test("can create a workout", async () => {
     const { app } = await setup();
     await request(app)
-      .post("/api/workouts")
+      .post("/api/v1/workouts")
       .set("Accept", "application/json")
       .set("Authorization", "Bearer 123")
       .send({
@@ -29,7 +29,7 @@ describe("create workouts api", () => {
   test("unauthorized", async () => {
     const { app } = await setup();
     await request(app)
-      .post("/api/workouts")
+      .post("/api/v1/workouts")
       .set("Accept", "application/json")
       .expect(401);
   });

@@ -11,7 +11,7 @@ describe("workouts api", () => {
   test("GET /workouts", async () => {
     const { app } = await setup();
     await request(app)
-      .get("/api/workouts")
+      .get("/api/v1/workouts")
       .set("Accept", "application/json")
       .set("Authorization", "Bearer 123")
       .expect(200);
