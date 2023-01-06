@@ -13,6 +13,7 @@ describe("workouts api", () => {
     await request(app)
       .get("/api/workouts")
       .set("Accept", "application/json")
+      .set("Authorization", "Bearer 123")
       .expect(200);
   });
 });

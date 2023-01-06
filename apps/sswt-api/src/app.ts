@@ -1,10 +1,12 @@
 import express, { Express, Request, Response } from "express";
 import dotenv from "dotenv";
+import { authorize } from "src/middleware/authorize";
 
 async function buildApp() {
   dotenv.config();
 
   const app: Express = express();
+  app.use(authorize);
 
   app.get("/", (req: Request, res: Response) => {
     res.json({ msg: "Hello World, Soliddev!" });
@@ -15,10 +17,6 @@ async function buildApp() {
   });
 
   app.post("/api/workouts", (req: Request, res: Response) => {
-    if (!req.headers.authorization) {
-      return res.status(401).json({ msg: "Unauthorized" });
-    }
-
     res.json({ id: 1, name: "My Workout", date: "2021-01-01 00:00:00" });
   });
 
