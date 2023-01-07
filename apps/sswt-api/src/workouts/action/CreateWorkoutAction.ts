@@ -4,7 +4,6 @@ import { inject, injectable } from "inversify";
 import TYPES from "src/container/types";
 import { WorkoutRepository } from "src/workouts/repository/WorkoutRepository";
 import { UserContext } from "src/workouts/context/UserContext";
-import { Workout } from "src/workouts/model/Workout";
 
 @injectable()
 export class CreateWorkoutAction {
@@ -17,9 +16,7 @@ export class CreateWorkoutAction {
     const { name, date } = req.body;
     const userId = await this.userContext.getUserId();
 
-    const workout = new Workout(null, name, new Date(date), userId);
-
-    const createdWorkout = await this.workoutRepository.create(workout);
+    const createdWorkout = await this.workoutRepository.create(name, new Date(date), userId);
     res.json(createdWorkout);
   }
 }

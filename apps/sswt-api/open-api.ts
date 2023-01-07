@@ -17,6 +17,7 @@ export default {
       post: {
         description: "Create a workout",
         required: true,
+        tags: ["Workouts"],
         requestBody: {
           content: {
             "application/json": {
@@ -41,6 +42,7 @@ export default {
       post: {
         description: "Add an exercise to a workout",
         required: true,
+        tags: ["Exercises"],
         parameters: [
           {
             name: "workoutId",
@@ -74,6 +76,7 @@ export default {
       delete: {
         description: "Remove an exercise from a workout including all sets",
         required: true,
+        tags: ["Exercises"],
         parameters: [
           {
             name: "workoutId",
@@ -95,6 +98,49 @@ export default {
         responses: {
           "200": {
             description: "Success",
+          },
+        },
+      },
+    },
+    "/workouts/{workoutId}/exercises/{exerciseId}/sets": {
+      post: {
+        description: "Add a set to an exercise of a workout",
+        required: true,
+        tags: ["Sets"],
+        parameters: [
+          {
+            name: "workoutId",
+            in: "path",
+            required: true,
+            schema: {
+              type: "integer",
+            },
+          },
+          {
+            name: "exerciseId",
+            in: "path",
+            required: true,
+            schema: {
+              type: "integer",
+            },
+          },
+        ],
+        requestBody: {
+          content: {
+            "application/json": {
+              schema: {
+                $ref: "#/components/schemas/Set",
+              },
+              example: {
+                weight: 8025,
+                reps: 5,
+              },
+            },
+          },
+        },
+        responses: {
+          "201": {
+            description: "Created",
           },
         },
       },
@@ -123,6 +169,18 @@ export default {
           },
         },
       },
+      Set: {
+        type: "object",
+        description: "A JSON object containing set information",
+        properties: {
+          weight: {
+            type: "number",
+          },
+          reps: {
+            type: "number",
+          },
+        },
+      },
     },
     securitySchemes: {
       bearerAuth: {
@@ -135,6 +193,20 @@ export default {
   security: [
     {
       bearerAuth: [],
+    },
+  ],
+  tags: [
+    {
+      name: "Workouts",
+      description: "Workout related operations",
+    },
+    {
+      name: "Exercises",
+      description: "Exercise related operations",
+    },
+    {
+      name: "Sets",
+      description: "Set related operations",
     },
   ],
 };
