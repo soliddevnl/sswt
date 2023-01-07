@@ -12,6 +12,7 @@ import container from "src/container/inversify.config";
 import { CreateWorkoutAction } from "src/workouts/action/CreateWorkoutAction";
 import { AddExerciseToWorkoutAction } from "src/workouts/action/AddExerciseToWorkoutAction";
 import { RemoveExerciseFromWorkoutAction } from "src/workouts/action/RemoveExerciseFromWorkoutAction";
+import { AddSetAction } from "src/workouts/action/AddSetAction";
 
 async function buildApp() {
   dotenv.config();
@@ -27,6 +28,11 @@ async function buildApp() {
 
   app.get("/api/v1/workouts", (req: Request, res: Response) => {
     res.json([]);
+  });
+
+  app.post("/api/v1/workouts/:workoutId/exercises/:exerciseId/sets", async (req: Request, res: Response) => {
+    const controller = container.get<AddSetAction>(TYPES.AddSetAction);
+    await controller.execute(req, res);
   });
 
   app.delete("/api/v1/workouts/:workoutId/exercises/:exerciseId", async (req: Request, res: Response) => {
