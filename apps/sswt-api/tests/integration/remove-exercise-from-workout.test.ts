@@ -6,7 +6,7 @@ import { Workout } from "src/workouts/model/Workout";
 import { UserContext } from "src/workouts/context/UserContext";
 import { ExerciseRepository } from "src/workouts/repository/ExerciseRepository";
 
-describe("remove exercise to workout api", () => {
+describe("remove exercise from workout api", () => {
   async function setup() {
     const { app, container } = await buildApp();
 
