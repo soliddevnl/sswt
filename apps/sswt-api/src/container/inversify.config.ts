@@ -8,13 +8,15 @@ import { DummyUserContext } from "src/workouts/context/DummyUserContext";
 import { PrismaClient } from "@prisma/client";
 import { ExerciseRepository } from "src/workouts/repository/ExerciseRepository";
 import { RemoveExerciseFromWorkoutAction } from "src/workouts/action/RemoveExerciseFromWorkoutAction";
-import { SetRepository } from "src/workouts/repository/SetRepository";
 import { AddSetAction } from "src/workouts/action/AddSetAction";
+import { UpdateSetAction } from "src/workouts/action/UpdateSetAction";
+import { SetRepository } from "src/workouts/repository/SetRepository";
 
 const container = new Container();
 container.bind<CreateWorkoutAction>(TYPES.CreateWorkoutAction).to(CreateWorkoutAction);
 container.bind<AddExerciseToWorkoutAction>(TYPES.AddExerciseToWorkoutAction).to(AddExerciseToWorkoutAction);
 container.bind<AddSetAction>(TYPES.AddSetAction).to(AddSetAction);
+container.bind<UpdateSetAction>(TYPES.UpdateSetAction).to(UpdateSetAction);
 container
   .bind<RemoveExerciseFromWorkoutAction>(TYPES.RemoveExerciseFromWorkoutAction)
   .to(RemoveExerciseFromWorkoutAction);

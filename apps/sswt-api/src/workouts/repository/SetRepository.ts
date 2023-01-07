@@ -18,4 +18,18 @@ export class SetRepository {
 
     return createSetDto(set);
   }
+
+  async update(setId: number, reps: number, weight: number): Promise<Set> {
+    const set = await this.db.set.update({
+      where: {
+        id: setId,
+      },
+      data: {
+        reps: reps,
+        weight: weight,
+      },
+    });
+
+    return createSetDto(set);
+  }
 }
