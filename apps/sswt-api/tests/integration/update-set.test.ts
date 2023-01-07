@@ -36,6 +36,6 @@ describe("update set api", () => {
         reps: 10,
         weight: 100,
       })
-      .expect(201);
+      .expect(200);
   });
 });

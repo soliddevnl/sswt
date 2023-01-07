@@ -14,6 +14,6 @@ export class UpdateSetAction {
 
     const set = await this.setRepository.update(setId, reps, weight);
 
-    res.status(201).json(set);
+    res.status(200).json(set);
   }
 }
