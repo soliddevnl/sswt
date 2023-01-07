@@ -3,8 +3,11 @@ import { buildApp } from "src/app";
 
 describe("unauthorized access", () => {
   async function setup() {
+    const { app, container } = await buildApp();
+
     return {
-      app: await buildApp(),
+      app: app,
+      container: container,
     };
   }
 

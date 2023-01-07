@@ -37,6 +37,39 @@ export default {
         },
       },
     },
+    "/workouts/{workoutId}/exercises": {
+      post: {
+        description: "Add an exercise to a workout",
+        required: true,
+        parameters: [
+          {
+            name: "workoutId",
+            in: "path",
+            required: true,
+            schema: {
+              type: "integer",
+            },
+          },
+        ],
+        requestBody: {
+          content: {
+            "application/json": {
+              schema: {
+                $ref: "#/components/schemas/Exercise",
+              },
+              example: {
+                name: "Bech Press",
+              },
+            },
+          },
+        },
+        responses: {
+          "201": {
+            description: "Created",
+          },
+        },
+      },
+    },
   },
   components: {
     schemas: {
@@ -48,6 +81,15 @@ export default {
             type: "string",
           },
           date: {
+            type: "string",
+          },
+        },
+      },
+      Exercise: {
+        type: "object",
+        description: "A JSON object containing exercise information",
+        properties: {
+          name: {
             type: "string",
           },
         },
