@@ -17,7 +17,7 @@ export class CreateWorkoutAction {
     const { name, date } = req.body;
     const userId = await this.userContext.getUserId();
 
-    const workout = new Workout(name, new Date(date), userId);
+    const workout = new Workout(null, name, new Date(date), userId);
 
     const createdWorkout = await this.workoutRepository.create(workout);
     res.json(createdWorkout);
