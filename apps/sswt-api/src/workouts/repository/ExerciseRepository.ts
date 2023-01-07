@@ -20,4 +20,13 @@ export class ExerciseRepository {
 
     return { id: exercise.id };
   }
+
+  async remove(workoutId: number, exerciseId: number): Promise<void> {
+    await this.db.exercise.deleteMany({
+      where: {
+        id: exerciseId,
+        workoutId: workoutId,
+      },
+    });
+  }
 }

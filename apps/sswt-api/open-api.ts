@@ -58,7 +58,7 @@ export default {
                 $ref: "#/components/schemas/Exercise",
               },
               example: {
-                name: "Bech Press",
+                name: "Bench Press",
               },
             },
           },
@@ -66,6 +66,35 @@ export default {
         responses: {
           "201": {
             description: "Created",
+          },
+        },
+      },
+    },
+    "/workouts/{workoutId}/exercises/{exerciseId}": {
+      delete: {
+        description: "Remove an exercise from a workout including all sets",
+        required: true,
+        parameters: [
+          {
+            name: "workoutId",
+            in: "path",
+            required: true,
+            schema: {
+              type: "integer",
+            },
+          },
+          {
+            name: "exerciseId",
+            in: "path",
+            required: true,
+            schema: {
+              type: "integer",
+            },
+          },
+        ],
+        responses: {
+          "200": {
+            description: "Success",
           },
         },
       },
