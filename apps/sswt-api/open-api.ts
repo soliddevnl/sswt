@@ -145,6 +145,57 @@ export default {
         },
       },
     },
+    "/workouts/{workoutId}/exercises/{exerciseId}/sets/{setId}": {
+      put: {
+        description: "Update a set",
+        required: true,
+        tags: ["Sets"],
+        parameters: [
+          {
+            name: "workoutId",
+            in: "path",
+            required: true,
+            schema: {
+              type: "integer",
+            },
+          },
+          {
+            name: "exerciseId",
+            in: "path",
+            required: true,
+            schema: {
+              type: "integer",
+            },
+          },
+          {
+            name: "setId",
+            in: "path",
+            required: true,
+            schema: {
+              type: "integer",
+            },
+          },
+        ],
+        requestBody: {
+          content: {
+            "application/json": {
+              schema: {
+                $ref: "#/components/schemas/Set",
+              },
+              example: {
+                weight: 8025,
+                reps: 5,
+              },
+            },
+          },
+        },
+        responses: {
+          "200": {
+            description: "Success",
+          },
+        },
+      },
+    },
   },
   components: {
     schemas: {

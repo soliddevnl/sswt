@@ -12,6 +12,7 @@ import container from "src/container/inversify.config";
 import { CreateWorkoutAction } from "src/workouts/action/CreateWorkoutAction";
 import { AddExerciseToWorkoutAction } from "src/workouts/action/AddExerciseToWorkoutAction";
 import { RemoveExerciseFromWorkoutAction } from "src/workouts/action/RemoveExerciseFromWorkoutAction";
+import { UpdateSetAction } from "src/workouts/action/UpdateSetAction";
 import { AddSetAction } from "src/workouts/action/AddSetAction";
 
 async function buildApp() {
@@ -32,6 +33,11 @@ async function buildApp() {
 
   app.post("/api/v1/workouts/:workoutId/exercises/:exerciseId/sets", async (req: Request, res: Response) => {
     const controller = container.get<AddSetAction>(TYPES.AddSetAction);
+    await controller.execute(req, res);
+  });
+
+  app.put("/api/v1/workouts/:workoutId/exercises/:exerciseId/sets/:setId", async (req: Request, res: Response) => {
+    const controller = container.get<UpdateSetAction>(TYPES.UpdateSetAction);
     await controller.execute(req, res);
   });
 
