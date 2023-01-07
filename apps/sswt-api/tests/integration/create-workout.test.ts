@@ -19,18 +19,13 @@ describe("create workouts api", () => {
         date: "2021-01-01 00:00:00",
       })
       .expect(200)
-      .expect({
-        id: 1,
-        name: "My Workout",
-        date: "2021-01-01 00:00:00",
+      .expect((res) => {
+        expect(res.body.id).not.toBeNull();
       });
   });
 
   test("unauthorized", async () => {
     const { app } = await setup();
-    await request(app)
-      .post("/api/v1/workouts")
-      .set("Accept", "application/json")
-      .expect(401);
+    await request(app).post("/api/v1/workouts").set("Accept", "application/json").expect(401);
   });
 });

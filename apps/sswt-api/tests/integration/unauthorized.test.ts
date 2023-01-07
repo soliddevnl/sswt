@@ -10,9 +10,6 @@ describe("unauthorized access", () => {
 
   test("GET /", async () => {
     const { app } = await setup();
-    await request(app)
-      .get("/api/v1/")
-      .set("Accept", "application/json")
-      .expect(401);
+    await request(app).get("/api/v1/").set("Accept", "application/json").expect(401);
   });
 });

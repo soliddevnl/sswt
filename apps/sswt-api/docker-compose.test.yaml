@@ -1,0 +1,11 @@
+services:
+  db-test:
+    image: postgres:9.6
+    container_name: sswt-db-test
+    restart: always
+    environment:
+      POSTGRES_USER: sswt-test
+      POSTGRES_PASSWORD: sswt-test
+      POSTGRES_DB: sswt-test
+    ports:
+      - "5433:5432"

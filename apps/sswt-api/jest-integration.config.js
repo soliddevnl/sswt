@@ -1,0 +1,8 @@
+/** @type {import('ts-jest').JestConfigWithTsJest} */
+module.exports = {
+  preset: "ts-jest",
+  testEnvironment: "node",
+  moduleDirectories: ["node_modules", "src", "tests", "<rootDir>"],
+  testMatch: ["**/tests/integration/**/*.test.ts"],
+  globalSetup: "<rootDir>/setup-integration.ts",
+};

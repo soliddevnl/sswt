@@ -1,0 +1,16 @@
+services:
+  db:
+    image: postgres:9.6
+    container_name: sswt-db
+    restart: always
+    environment:
+      POSTGRES_USER: sswt
+      POSTGRES_PASSWORD: sswt
+      POSTGRES_DB: sswt
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+volumes:
+  db_data:

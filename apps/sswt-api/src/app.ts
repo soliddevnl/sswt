@@ -1,12 +1,14 @@
 import express, { Express, Request, Response } from "express";
 import dotenv from "dotenv";
 import { authorize } from "src/middleware/authorize";
-import { createWorkoutController } from "src/workouts/controller/createWorkoutController";
 
 import bodyParser from "body-parser";
 import swaggerUi from "swagger-ui-express";
 
 import swaggerDocument from "open-api";
+import container from "src/container/inversify.config";
+import { CreateWorkoutAction } from "src/workouts/action/CreateWorkoutAction";
+import TYPES from "src/container/types";
 
 async function buildApp() {
   dotenv.config();
@@ -24,7 +26,10 @@ async function buildApp() {
     res.json([]);
   });
 
-  app.post("/api/v1/workouts", createWorkoutController);
+  app.post("/api/v1/workouts", async (req: Request, res: Response) => {
+    const controller = container.get<CreateWorkoutAction>(TYPES.CreateWorkoutAction);
+    await controller.execute(req, res);
+  });
 
   return app;
 }
