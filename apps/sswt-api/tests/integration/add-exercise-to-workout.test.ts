@@ -2,7 +2,6 @@ import request from "supertest";
 import { buildApp } from "src/app";
 import { WorkoutRepository } from "src/workouts/repository/WorkoutRepository";
 import TYPES from "src/container/types";
-import { Workout } from "src/workouts/model/Workout";
 import { UserContext } from "src/workouts/context/UserContext";
 
 describe("add exercise to workout api", () => {
@@ -20,9 +19,7 @@ describe("add exercise to workout api", () => {
     const workoutRepository = container.get<WorkoutRepository>(TYPES.WorkoutRepository);
     const userContext = container.get<UserContext>(TYPES.UserContext);
 
-    const workout = await workoutRepository.create(
-      new Workout(null, "test workout", new Date(), await userContext.getUserId())
-    );
+    const workout = await workoutRepository.create("test workout", new Date(), await userContext.getUserId());
 
     await request(app)
       .post(`/api/v1/workouts/${workout.id}/exercises`)
