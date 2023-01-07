@@ -1,13 +1,17 @@
 name: SSWT integration tests
 on: [ push ]
 jobs:
-    Run-Integration-Test:
+    build:
         runs-on: ubuntu-latest
         defaults:
             run:
                 working-directory: ./apps/sswt-api
         steps:
             -   uses: actions/checkout@v3
+            -   name: Use Node.js
+                uses: actions/setup-node@v3
+                with:
+                    node-version: '18.13.0'
             -   name: Build app
                 run: yarn install
             -   uses: isbang/compose-action@v1.4.1
