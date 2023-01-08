@@ -5,8 +5,7 @@ describe("update exercise api", () => {
   test("can update an exercise", async () => {
     const { app, helpers } = await setupIntegration();
 
-    const workout = await helpers.createWorkout("Workout of the day");
-    const exercise = await helpers.createExercise(workout.id, "Bench press");
+    const { workout, exercise } = await helpers.createExercise("Bench press");
 
     await request(app)
       .put(`/api/v1/workouts/${workout.id}/exercises/${exercise.id}`)
