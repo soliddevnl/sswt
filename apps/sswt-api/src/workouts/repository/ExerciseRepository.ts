@@ -22,6 +22,19 @@ export class ExerciseRepository {
     return createExerciseDto(exercise);
   }
 
+  async update(workoutId: number, exerciseId: number, exerciseName: string): Promise<Exercise> {
+    const exercise = await this.db.exercise.update({
+      where: {
+        id: exerciseId,
+      },
+      data: {
+        name: exerciseName,
+      },
+    });
+
+    return createExerciseDto(exercise);
+  }
+
   async remove(workoutId: number, exerciseId: number): Promise<void> {
     await this.db.exercise.deleteMany({
       where: {

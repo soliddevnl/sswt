@@ -1,6 +1,7 @@
 const TYPES = {
   CreateWorkoutAction: Symbol("CreateWorkoutAction"),
   AddExerciseToWorkoutAction: Symbol("AddExerciseToWorkoutAction"),
+  UpdateExerciseAction: Symbol("UpdateExerciseAction"),
   RemoveExerciseFromWorkoutAction: Symbol("RemoveExerciseFromWorkoutAction"),
   AddSetAction: Symbol("AddSetAction"),
   UpdateSetAction: Symbol("UpdateSetAction"),

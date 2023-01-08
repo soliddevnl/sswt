@@ -1,18 +1,10 @@
 import request from "supertest";
-import { buildApp } from "src/app";
+import { setupIntegration } from "tests/integration/helpers/setup";
 
 describe("workouts api", () => {
-  async function setup() {
-    const { app, container } = await buildApp();
-
-    return {
-      app: app,
-      container: container,
-    };
-  }
-
   test("GET /workouts", async () => {
-    const { app } = await setup();
+    const { app } = await setupIntegration();
+
     await request(app)
       .get("/api/v1/workouts")
       .set("Accept", "application/json")
