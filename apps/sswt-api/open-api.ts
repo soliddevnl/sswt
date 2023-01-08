@@ -73,6 +73,38 @@ export default {
       },
     },
     "/workouts/{workoutId}/exercises/{exerciseId}": {
+      put: {
+        description: "Update an exercise in a workout",
+        required: true,
+        tags: ["Exercises"],
+        parameters: [
+          {
+            name: "workoutId",
+            in: "path",
+            required: true,
+            schema: {
+              type: "integer",
+            },
+          },
+        ],
+        requestBody: {
+          content: {
+            "application/json": {
+              schema: {
+                $ref: "#/components/schemas/Exercise",
+              },
+              example: {
+                name: "Bench Press",
+              },
+            },
+          },
+        },
+        responses: {
+          "200": {
+            description: "Success",
+          },
+        },
+      },
       delete: {
         description: "Remove an exercise from a workout including all sets",
         required: true,
