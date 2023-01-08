@@ -33,6 +33,16 @@ export class SetRepository {
     return createSetDto(set);
   }
 
+  async findAllForExercise(exerciseId: number): Promise<Set[]> {
+    const sets = await this.db.set.findMany({
+      where: {
+        exerciseId: exerciseId,
+      },
+    });
+
+    return sets.map(createSetDto);
+  }
+
   async remove(setId: number): Promise<void> {
     await this.db.set.delete({
       where: {

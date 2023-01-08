@@ -12,6 +12,9 @@ export interface IntegrationTestHelpers {
   createWorkout: (name: string) => Promise<Workout>;
   createExercise: (name: string) => Promise<{ workout: Workout; exercise: Exercise }>;
   createSet: (reps: number, weight: number) => Promise<{ workout: Workout; exercise: Exercise; set: Set }>;
+  createSets: (
+    sets: { reps: number; weight: number }[]
+  ) => Promise<{ workout: Workout; exercise: Exercise; sets: Set[] }>;
 }
 
 export async function setupIntegration() {
@@ -37,6 +40,14 @@ export async function setupIntegration() {
       const { exercise } = await this.createExercise("Bench press");
       const set = await setRepository.create(exercise.id, reps, weight);
       return { workout, exercise, set };
+    },
+    async createSets(
+      sets: { reps: number; weight: number }[]
+    ): Promise<{ workout: Workout; exercise: Exercise; sets: Set[] }> {
+      const workout = await this.createWorkout("test workout");
+      const { exercise } = await this.createExercise("Bench press");
+      const createdSets = await Promise.all(sets.map((set) => setRepository.create(exercise.id, set.reps, set.weight)));
+      return { workout, exercise, sets: createdSets };
     },
   };
 

@@ -190,6 +190,33 @@ export default {
       },
     },
     "/workouts/{workoutId}/exercises/{exerciseId}/sets": {
+      get: {
+        description: "Get all sets of an exercise in a workout",
+        tags: ["Sets"],
+        parameters: [
+          {
+            name: "workoutId",
+            in: "path",
+            required: true,
+            schema: {
+              type: "integer",
+            },
+          },
+          {
+            name: "exerciseId",
+            in: "path",
+            required: true,
+            schema: {
+              type: "integer",
+            },
+          },
+        ],
+        responses: {
+          "200": {
+            description: "Success",
+          },
+        },
+      },
       post: {
         description: "Add a set to an exercise of a workout",
         required: true,
