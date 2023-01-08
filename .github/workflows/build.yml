@@ -17,5 +17,7 @@ jobs:
             -   uses: isbang/compose-action@v1.4.1
                 with:
                     compose-file: "./apps/sswt-api/docker-compose.test.yaml"
+            -   name: Run unit tests
+                run: yarn test-unit
             -   name: Run integration tests
                 run: yarn test-integration
