@@ -39,9 +39,12 @@ export async function setupIntegration() {
     async createExercises(exercises: { name: string }[]): Promise<{ workout: Workout; exercises: Exercise[] }> {
       const workout = await this.createWorkout("test workout");
 
-      const createdExercises = await Promise.all(
-        exercises.map((exercise) => exerciseRepository.create(workout.id, exercise.name))
-      );
+      const createdExercises = [];
+      for (const exercise of exercises) {
+        const createdExercise = await exerciseRepository.create(workout.id, exercise.name);
+        createdExercises.push(createdExercise);
+      }
+
       return { workout, exercises: createdExercises };
     },
     async createSet(reps: number, weight: number): Promise<{ workout: Workout; exercise: Exercise; set: Set }> {
