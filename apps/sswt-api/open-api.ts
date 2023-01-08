@@ -195,6 +195,42 @@ export default {
           },
         },
       },
+      delete: {
+        description: "Remove a set from an exercise of a workout",
+        required: true,
+        tags: ["Sets"],
+        parameters: [
+          {
+            name: "workoutId",
+            in: "path",
+            required: true,
+            schema: {
+              type: "integer",
+            },
+          },
+          {
+            name: "exerciseId",
+            in: "path",
+            required: true,
+            schema: {
+              type: "integer",
+            },
+          },
+          {
+            name: "setId",
+            in: "path",
+            required: true,
+            schema: {
+              type: "integer",
+            },
+          },
+        ],
+        responses: {
+          "200": {
+            description: "Success",
+          },
+        },
+      },
     },
   },
   components: {

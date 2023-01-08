@@ -14,6 +14,7 @@ import { AddExerciseToWorkoutAction } from "src/workouts/action/AddExerciseToWor
 import { RemoveExerciseFromWorkoutAction } from "src/workouts/action/RemoveExerciseFromWorkoutAction";
 import { UpdateSetAction } from "src/workouts/action/UpdateSetAction";
 import { AddSetAction } from "src/workouts/action/AddSetAction";
+import { RemoveSetAction } from "src/workouts/action/RemoveSetAction";
 
 async function buildApp() {
   dotenv.config();
@@ -38,6 +39,11 @@ async function buildApp() {
 
   app.put("/api/v1/workouts/:workoutId/exercises/:exerciseId/sets/:setId", async (req: Request, res: Response) => {
     const controller = container.get<UpdateSetAction>(TYPES.UpdateSetAction);
+    await controller.execute(req, res);
+  });
+
+  app.delete("/api/v1/workouts/:workoutId/exercises/:exerciseId/sets/:setId", async (req: Request, res: Response) => {
+    const controller = container.get<RemoveSetAction>(TYPES.RemoveSetAction);
     await controller.execute(req, res);
   });
 

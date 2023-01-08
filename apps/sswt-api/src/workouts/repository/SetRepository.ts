@@ -32,4 +32,12 @@ export class SetRepository {
 
     return createSetDto(set);
   }
+
+  async remove(setId: number): Promise<void> {
+    await this.db.set.delete({
+      where: {
+        id: setId,
+      },
+    });
+  }
 }
