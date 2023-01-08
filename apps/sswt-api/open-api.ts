@@ -38,6 +38,31 @@ export default {
         },
       },
     },
+    "/workouts/{id}": {
+      put: {
+        description: "Update a workout",
+        required: true,
+        tags: ["Workouts"],
+        requestBody: {
+          content: {
+            "application/json": {
+              schema: {
+                $ref: "#/components/schemas/Workout",
+              },
+              example: {
+                name: "My Workout",
+                date: "2021-01-01 00:00:00",
+              },
+            },
+          },
+        },
+        responses: {
+          "200": {
+            description: "Success",
+          },
+        },
+      },
+    },
     "/workouts/{workoutId}/exercises": {
       post: {
         description: "Add an exercise to a workout",

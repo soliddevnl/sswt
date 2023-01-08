@@ -16,6 +16,7 @@ import { UpdateSetAction } from "src/workouts/action/UpdateSetAction";
 import { AddSetAction } from "src/workouts/action/AddSetAction";
 import { RemoveSetAction } from "src/workouts/action/RemoveSetAction";
 import { UpdateExerciseAction } from "src/workouts/action/UpdateExerciseAction";
+import { UpdateWorkoutAction } from "src/workouts/action/UpdateWorkoutAction";
 
 async function buildApp() {
   dotenv.config();
@@ -65,6 +66,11 @@ async function buildApp() {
 
   app.post("/api/v1/workouts", async (req: Request, res: Response) => {
     const controller = container.get<CreateWorkoutAction>(TYPES.CreateWorkoutAction);
+    await controller.execute(req, res);
+  });
+
+  app.put("/api/v1/workouts/:workoutId", async (req: Request, res: Response) => {
+    const controller = container.get<UpdateWorkoutAction>(TYPES.UpdateWorkoutAction);
     await controller.execute(req, res);
   });
 

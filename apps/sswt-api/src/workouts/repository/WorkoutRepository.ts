@@ -23,4 +23,18 @@ export class WorkoutRepository {
 
     return createWorkoutDto(workout);
   }
+
+  async update(workoutId: number, name: string, date: Date): Promise<Workout> {
+    const workout = await this.db.workout.update({
+      where: {
+        id: workoutId,
+      },
+      data: {
+        name: name,
+        date: date,
+      },
+    });
+
+    return createWorkoutDto(workout);
+  }
 }
