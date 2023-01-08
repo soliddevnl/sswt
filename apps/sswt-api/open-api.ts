@@ -38,11 +38,21 @@ export default {
         },
       },
     },
-    "/workouts/{id}": {
+    "/workouts/{workoutId}": {
       put: {
         description: "Update a workout",
         required: true,
         tags: ["Workouts"],
+        parameters: [
+          {
+            name: "workoutId",
+            in: "path",
+            required: true,
+            schema: {
+              type: "number",
+            },
+          },
+        ],
         requestBody: {
           content: {
             "application/json": {
@@ -56,6 +66,26 @@ export default {
             },
           },
         },
+        responses: {
+          "200": {
+            description: "Success",
+          },
+        },
+      },
+      delete: {
+        description: "Remove a workout",
+        required: true,
+        tags: ["Workouts"],
+        parameters: [
+          {
+            name: "workoutId",
+            in: "path",
+            required: true,
+            schema: {
+              type: "number",
+            },
+          },
+        ],
         responses: {
           "200": {
             description: "Success",

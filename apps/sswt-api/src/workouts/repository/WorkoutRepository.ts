@@ -37,4 +37,12 @@ export class WorkoutRepository {
 
     return createWorkoutDto(workout);
   }
+
+  async remove(workoutId: number): Promise<void> {
+    await this.db.workout.delete({
+      where: {
+        id: workoutId,
+      },
+    });
+  }
 }
