@@ -6,16 +6,14 @@ import { ExerciseRepository } from "src/workouts/repository/ExerciseRepository";
 import { ActionInterface } from "src/workouts/action/ActionInterface";
 
 @injectable()
-export class UpdateExerciseAction implements ActionInterface {
+export class GetExercisesAction implements ActionInterface {
   constructor(@inject(TYPES.ExerciseRepository) private readonly exerciseRepository: ExerciseRepository) {}
 
   async execute(req: Request, res: Response) {
     const workoutId = parseInt(req.params.workoutId);
-    const exerciseId = parseInt(req.params.exerciseId);
-    const exerciseName = req.body.name;
 
-    const exercise = await this.exerciseRepository.update(workoutId, exerciseId, exerciseName);
+    const exercises = await this.exerciseRepository.getExercisesByWorkoutId(workoutId);
 
-    res.status(200).json(exercise);
+    res.json(exercises);
   }
 }

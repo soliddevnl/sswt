@@ -35,6 +35,16 @@ export class ExerciseRepository {
     return createExerciseDto(exercise);
   }
 
+  async getExercisesByWorkoutId(workoutId: number): Promise<Exercise[]> {
+    const exercises = await this.db.exercise.findMany({
+      where: {
+        workoutId: workoutId,
+      },
+    });
+
+    return exercises.map(createExerciseDto);
+  }
+
   async remove(workoutId: number, exerciseId: number): Promise<void> {
     await this.db.exercise.deleteMany({
       where: {

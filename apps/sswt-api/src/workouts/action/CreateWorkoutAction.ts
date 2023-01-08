@@ -4,9 +4,10 @@ import { inject, injectable } from "inversify";
 import TYPES from "src/container/types";
 import { WorkoutRepository } from "src/workouts/repository/WorkoutRepository";
 import { UserContext } from "src/workouts/context/UserContext";
+import { ActionInterface } from "src/workouts/action/ActionInterface";
 
 @injectable()
-export class CreateWorkoutAction {
+export class CreateWorkoutAction implements ActionInterface {
   constructor(
     @inject(TYPES.WorkoutRepository) private readonly workoutRepository: WorkoutRepository,
     @inject(TYPES.UserContext) private readonly userContext: UserContext

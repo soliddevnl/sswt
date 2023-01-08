@@ -3,9 +3,10 @@ import { inject, injectable } from "inversify";
 
 import TYPES from "src/container/types";
 import { WorkoutRepository } from "src/workouts/repository/WorkoutRepository";
+import { ActionInterface } from "src/workouts/action/ActionInterface";
 
 @injectable()
-export class RemoveWorkoutAction {
+export class RemoveWorkoutAction implements ActionInterface {
   constructor(@inject(TYPES.WorkoutRepository) private readonly workoutRepository: WorkoutRepository) {}
 
   async execute(req: Request, res: Response) {
