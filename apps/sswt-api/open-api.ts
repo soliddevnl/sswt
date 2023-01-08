@@ -94,6 +94,35 @@ export default {
       },
     },
     "/workouts/{workoutId}/exercises": {
+      get: {
+        description: "Get exercises of a workout",
+        tags: ["Exercises"],
+        parameters: [
+          {
+            name: "workoutId",
+            in: "path",
+            required: true,
+            schema: {
+              type: "number",
+            },
+          },
+        ],
+        responses: {
+          "200": {
+            description: "Success",
+            content: {
+              "application/json": {
+                schema: {
+                  type: "array",
+                  items: {
+                    $ref: "#/components/schemas/Exercise",
+                  },
+                },
+              },
+            },
+          },
+        },
+      },
       post: {
         description: "Add an exercise to a workout",
         required: true,
@@ -112,7 +141,7 @@ export default {
           content: {
             "application/json": {
               schema: {
-                $ref: "#/components/schemas/Exercise",
+                $ref: "#/components/schemas/ExerciseInput",
               },
               example: {
                 name: "Bench Press",
@@ -146,7 +175,7 @@ export default {
           content: {
             "application/json": {
               schema: {
-                $ref: "#/components/schemas/Exercise",
+                $ref: "#/components/schemas/ExerciseInput",
               },
               example: {
                 name: "Bench Press",
@@ -362,6 +391,18 @@ export default {
         },
       },
       Exercise: {
+        type: "object",
+        description: "A JSON object containing exercise information",
+        properties: {
+          id: {
+            type: "integer",
+          },
+          name: {
+            type: "string",
+          },
+        },
+      },
+      ExerciseInput: {
         type: "object",
         description: "A JSON object containing exercise information",
         properties: {
