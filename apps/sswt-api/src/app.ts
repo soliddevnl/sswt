@@ -8,18 +8,7 @@ import swaggerUi from "swagger-ui-express";
 import swaggerDocument from "open-api";
 import TYPES from "src/container/types";
 import container from "src/container/inversify.config";
-
-import { CreateWorkoutAction } from "src/workouts/action/CreateWorkoutAction";
-import { AddExerciseToWorkoutAction } from "src/workouts/action/AddExerciseToWorkoutAction";
-import { RemoveExerciseFromWorkoutAction } from "src/workouts/action/RemoveExerciseFromWorkoutAction";
-import { UpdateSetAction } from "src/workouts/action/UpdateSetAction";
-import { AddSetAction } from "src/workouts/action/AddSetAction";
-import { RemoveSetAction } from "src/workouts/action/RemoveSetAction";
-import { UpdateExerciseAction } from "src/workouts/action/UpdateExerciseAction";
-import { UpdateWorkoutAction } from "src/workouts/action/UpdateWorkoutAction";
-import { RemoveWorkoutAction } from "src/workouts/action/RemoveWorkoutAction";
-import { GetSetsAction } from "src/workouts/action/GetSetsAction";
-import { GetExercisesAction } from "src/workouts/action/GetExercisesAction";
+import { ActionInterface } from "src/workouts/action/ActionInterface";
 
 async function buildApp() {
   dotenv.config();
@@ -37,60 +26,79 @@ async function buildApp() {
     res.json([]);
   });
 
-  app.get("/api/v1/workouts/:workoutId/exercises/:exerciseId/sets", async (req: Request, res: Response) => {
-    const controller = container.get<GetSetsAction>(TYPES.GetSetsAction);
-    await controller.execute(req, res);
-  });
+  interface Route {
+    path: string;
+    method: HttpMethod;
+    action: keyof typeof TYPES;
+  }
 
-  app.post("/api/v1/workouts/:workoutId/exercises/:exerciseId/sets", async (req: Request, res: Response) => {
-    const controller = container.get<AddSetAction>(TYPES.AddSetAction);
-    await controller.execute(req, res);
-  });
+  type HttpMethod = "GET" | "POST" | "PUT" | "DELETE";
 
-  app.put("/api/v1/workouts/:workoutId/exercises/:exerciseId/sets/:setId", async (req: Request, res: Response) => {
-    const controller = container.get<UpdateSetAction>(TYPES.UpdateSetAction);
-    await controller.execute(req, res);
-  });
+  const routes: Route[] = [
+    {
+      path: "/api/v1/workouts/:workoutId/exercises/:exerciseId/sets",
+      method: "GET",
+      action: "GetSetsAction",
+    },
+    {
+      path: "/api/v1/workouts/:workoutId/exercises/:exerciseId/sets",
+      method: "POST",
+      action: "AddSetAction",
+    },
+    {
+      path: "/api/v1/workouts/:workoutId/exercises/:exerciseId/sets/:setId",
+      method: "PUT",
+      action: "UpdateSetAction",
+    },
+    {
+      path: "/api/v1/workouts/:workoutId/exercises/:exerciseId/sets/:setId",
+      method: "DELETE",
+      action: "RemoveSetAction",
+    },
+    {
+      path: "/api/v1/workouts/:workoutId/exercises/:exerciseId",
+      method: "DELETE",
+      action: "RemoveExerciseFromWorkoutAction",
+    },
+    {
+      path: "/api/v1/workouts/:workoutId/exercises",
+      method: "GET",
+      action: "GetExercisesAction",
+    },
+    {
+      path: "/api/v1/workouts/:workoutId/exercises",
+      method: "POST",
+      action: "AddExerciseToWorkoutAction",
+    },
+    {
+      path: "/api/v1/workouts/:workoutId/exercises/:exerciseId",
+      method: "PUT",
+      action: "UpdateExerciseAction",
+    },
+    {
+      path: "/api/v1/workouts",
+      method: "POST",
+      action: "CreateWorkoutAction",
+    },
+    {
+      path: "/api/v1/workouts/:workoutId",
+      method: "PUT",
+      action: "UpdateWorkoutAction",
+    },
+    {
+      path: "/api/v1/workouts/:workoutId",
+      method: "DELETE",
+      action: "RemoveWorkoutAction",
+    },
+  ];
 
-  app.delete("/api/v1/workouts/:workoutId/exercises/:exerciseId/sets/:setId", async (req: Request, res: Response) => {
-    const controller = container.get<RemoveSetAction>(TYPES.RemoveSetAction);
-    await controller.execute(req, res);
-  });
-
-  app.delete("/api/v1/workouts/:workoutId/exercises/:exerciseId", async (req: Request, res: Response) => {
-    const controller = container.get<RemoveExerciseFromWorkoutAction>(TYPES.RemoveExerciseFromWorkoutAction);
-    await controller.execute(req, res);
-  });
-
-  app.get("/api/v1/workouts/:workoutId/exercises", async (req: Request, res: Response) => {
-    const controller = container.get<GetExercisesAction>(TYPES.GetExercisesAction);
-    await controller.execute(req, res);
-  });
-
-  app.post("/api/v1/workouts/:workoutId/exercises", async (req: Request, res: Response) => {
-    const controller = container.get<AddExerciseToWorkoutAction>(TYPES.AddExerciseToWorkoutAction);
-    await controller.execute(req, res);
-  });
-
-  app.put("/api/v1/workouts/:workoutId/exercises/:exerciseId", async (req: Request, res: Response) => {
-    const controller = container.get<UpdateExerciseAction>(TYPES.UpdateExerciseAction);
-    await controller.execute(req, res);
-  });
-
-  app.post("/api/v1/workouts", async (req: Request, res: Response) => {
-    const controller = container.get<CreateWorkoutAction>(TYPES.CreateWorkoutAction);
-    await controller.execute(req, res);
-  });
-
-  app.put("/api/v1/workouts/:workoutId", async (req: Request, res: Response) => {
-    const controller = container.get<UpdateWorkoutAction>(TYPES.UpdateWorkoutAction);
-    await controller.execute(req, res);
-  });
-
-  app.delete("/api/v1/workouts/:workoutId", async (req: Request, res: Response) => {
-    const controller = container.get<RemoveWorkoutAction>(TYPES.RemoveWorkoutAction);
-    await controller.execute(req, res);
-  });
+  for (const route of routes) {
+    const method = route.method.toLowerCase() as keyof typeof app;
+    app[method](route.path, async (req: Request, res: Response) => {
+      const controller = container.get<ActionInterface>(TYPES[route.action]);
+      await controller.execute(req, res);
+    });
+  }
 
   return {
     app,
