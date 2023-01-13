@@ -1,5 +1,6 @@
 const TYPES = {
   NotFoundAction: Symbol("NotFoundAction"),
+  GetWorkoutAction: Symbol("GetWorkoutAction"),
   CreateWorkoutAction: Symbol("CreateWorkoutAction"),
   UpdateWorkoutAction: Symbol("UpdateWorkoutAction"),
   RemoveWorkoutAction: Symbol("RemoveWorkoutAction"),

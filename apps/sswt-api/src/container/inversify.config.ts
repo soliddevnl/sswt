@@ -17,8 +17,10 @@ import { UpdateWorkoutAction } from "src/workouts/action/UpdateWorkoutAction";
 import { RemoveWorkoutAction } from "src/workouts/action/RemoveWorkoutAction";
 import { GetSetsAction } from "src/workouts/action/GetSetsAction";
 import { GetExercisesAction } from "src/workouts/action/GetExercisesAction";
+import { GetWorkoutAction } from "src/workouts/action/GetWorkoutAction";
 
 const container = new Container();
+container.bind<GetWorkoutAction>(TYPES.GetWorkoutAction).to(GetWorkoutAction);
 container.bind<CreateWorkoutAction>(TYPES.CreateWorkoutAction).to(CreateWorkoutAction);
 container.bind<UpdateWorkoutAction>(TYPES.UpdateWorkoutAction).to(UpdateWorkoutAction);
 container.bind<RemoveWorkoutAction>(TYPES.RemoveWorkoutAction).to(RemoveWorkoutAction);

@@ -82,6 +82,11 @@ async function buildApp() {
     },
     {
       path: "/api/v1/workouts/:workoutId",
+      method: "GET",
+      action: "GetWorkoutAction",
+    },
+    {
+      path: "/api/v1/workouts/:workoutId",
       method: "PUT",
       action: "UpdateWorkoutAction",
     },

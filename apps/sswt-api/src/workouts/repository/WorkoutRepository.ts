@@ -8,6 +8,20 @@ import { createWorkoutDto } from "src/workouts/dto/Workout";
 export class WorkoutRepository {
   constructor(@inject(TYPES.PrismaClient) private readonly db: PrismaClient) {}
 
+  async find(workoutId: number): Promise<Workout> {
+    const workout = await this.db.workout.findUnique({
+      where: {
+        id: workoutId,
+      },
+    });
+
+    if (!workout) {
+      throw new Error("Workout not found");
+    }
+
+    return createWorkoutDto(workout);
+  }
+
   async create(name: string, date: Date, userId: number): Promise<Workout> {
     const workout = await this.db.workout.create({
       data: {

@@ -22,7 +22,7 @@ export default {
           content: {
             "application/json": {
               schema: {
-                $ref: "#/components/schemas/Workout",
+                $ref: "#/components/schemas/WorkoutInput",
               },
               example: {
                 name: "My Workout",
@@ -39,6 +39,32 @@ export default {
       },
     },
     "/workouts/{workoutId}": {
+      get: {
+        description: "Get a workout",
+        tags: ["Workouts"],
+        parameters: [
+          {
+            name: "workoutId",
+            in: "path",
+            required: true,
+            schema: {
+              type: "integer",
+            },
+          },
+        ],
+        responses: {
+          "200": {
+            description: "Success",
+            content: {
+              "application/json": {
+                schema: {
+                  $ref: "#/components/schemas/Workout",
+                },
+              },
+            },
+          },
+        },
+      },
       put: {
         description: "Update a workout",
         required: true,
@@ -57,7 +83,7 @@ export default {
           content: {
             "application/json": {
               schema: {
-                $ref: "#/components/schemas/Workout",
+                $ref: "#/components/schemas/WorkoutInput",
               },
               example: {
                 name: "My Workout",
@@ -379,6 +405,21 @@ export default {
   components: {
     schemas: {
       Workout: {
+        type: "object",
+        description: "A JSON object containing workout information",
+        properties: {
+          id: {
+            type: "integer",
+          },
+          name: {
+            type: "string",
+          },
+          date: {
+            type: "string",
+          },
+        },
+      },
+      WorkoutInput: {
         type: "object",
         description: "A JSON object containing workout information",
         properties: {
