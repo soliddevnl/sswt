@@ -1,12 +1,7 @@
 import { buildApp } from "src/app";
-import { WorkoutRepository } from "src/workouts/repository/WorkoutRepository";
-import TYPES from "src/container/types";
-import { UserContext } from "src/workouts/context/UserContext";
-import { ExerciseRepository } from "src/workouts/repository/ExerciseRepository";
 import { Workout } from "src/workouts/dto/Workout";
 import { Exercise } from "src/workouts/dto/Exercise";
 import { Set } from "src/workouts/dto/Set";
-import { SetRepository } from "src/workouts/repository/SetRepository";
 
 export interface IntegrationTestHelpers {
   createWorkout: (name: string) => Promise<Workout>;
@@ -21,11 +16,11 @@ export interface IntegrationTestHelpers {
 export async function setupIntegration() {
   const { app, container } = await buildApp();
 
-  const workoutRepository = container.get<WorkoutRepository>(TYPES.WorkoutRepository);
-  const exerciseRepository = container.get<ExerciseRepository>(TYPES.ExerciseRepository);
-  const setRepository = container.get<SetRepository>(TYPES.SetRepository);
+  const workoutRepository = await container.workoutRepository();
+  const exerciseRepository = await container.exerciseRepository();
+  const setRepository = await container.setRepository();
 
-  const userContext = container.get<UserContext>(TYPES.UserContext);
+  const userContext = await container.userContext();
 
   const helpers: IntegrationTestHelpers = {
     async createWorkout(name: string) {

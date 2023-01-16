@@ -1,11 +1,8 @@
 import { PrismaClient } from "@prisma/client";
-import { injectable, inject } from "inversify";
-import TYPES from "src/container/types";
 import { createExerciseDto, Exercise } from "src/workouts/dto/Exercise";
 
-@injectable()
 export class ExerciseRepository {
-  constructor(@inject(TYPES.PrismaClient) private readonly db: PrismaClient) {}
+  constructor(private readonly db: PrismaClient) {}
 
   async create(workoutId: number, name: string): Promise<Exercise> {
     const exercise = await this.db.exercise.create({

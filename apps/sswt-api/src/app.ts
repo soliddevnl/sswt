@@ -6,12 +6,13 @@ import bodyParser from "body-parser";
 import swaggerUi from "swagger-ui-express";
 
 import swaggerDocument from "open-api";
-import TYPES from "src/container/types";
-import container from "src/container/inversify.config";
+import { ProductionServiceContainer, PublicServiceTypes } from "src/container/ServiceContainer";
 import { ActionInterface } from "src/workouts/action/ActionInterface";
 
 async function buildApp() {
   dotenv.config();
+
+  const container = new ProductionServiceContainer();
 
   const app: Express = express();
   app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
@@ -29,7 +30,7 @@ async function buildApp() {
   interface Route {
     path: string;
     method: HttpMethod;
-    action: keyof typeof TYPES;
+    action: PublicServiceTypes;
   }
 
   type HttpMethod = "GET" | "POST" | "PUT" | "DELETE";
@@ -38,69 +39,69 @@ async function buildApp() {
     {
       path: "/api/v1/workouts/:workoutId/exercises/:exerciseId/sets",
       method: "GET",
-      action: "GetSetsAction",
+      action: "getSetsAction",
     },
     {
       path: "/api/v1/workouts/:workoutId/exercises/:exerciseId/sets",
       method: "POST",
-      action: "AddSetAction",
+      action: "addSetAction",
     },
     {
       path: "/api/v1/workouts/:workoutId/exercises/:exerciseId/sets/:setId",
       method: "PUT",
-      action: "UpdateSetAction",
+      action: "updateSetAction",
     },
     {
       path: "/api/v1/workouts/:workoutId/exercises/:exerciseId/sets/:setId",
       method: "DELETE",
-      action: "RemoveSetAction",
+      action: "removeSetAction",
     },
     {
       path: "/api/v1/workouts/:workoutId/exercises/:exerciseId",
       method: "DELETE",
-      action: "RemoveExerciseFromWorkoutAction",
+      action: "removeExerciseFromWorkoutAction",
     },
     {
       path: "/api/v1/workouts/:workoutId/exercises",
       method: "GET",
-      action: "GetExercisesAction",
+      action: "getExercisesAction",
     },
     {
       path: "/api/v1/workouts/:workoutId/exercises",
       method: "POST",
-      action: "AddExerciseToWorkoutAction",
+      action: "addExerciseToWorkoutAction",
     },
     {
       path: "/api/v1/workouts/:workoutId/exercises/:exerciseId",
       method: "PUT",
-      action: "UpdateExerciseAction",
+      action: "updateExerciseAction",
     },
     {
       path: "/api/v1/workouts",
       method: "POST",
-      action: "CreateWorkoutAction",
+      action: "createWorkoutAction",
     },
     {
       path: "/api/v1/workouts/:workoutId",
       method: "GET",
-      action: "GetWorkoutAction",
+      action: "getWorkoutAction",
     },
     {
       path: "/api/v1/workouts/:workoutId",
       method: "PUT",
-      action: "UpdateWorkoutAction",
+      action: "updateWorkoutAction",
     },
     {
       path: "/api/v1/workouts/:workoutId",
       method: "DELETE",
-      action: "RemoveWorkoutAction",
+      action: "removeWorkoutAction",
     },
   ];
 
   for (const route of routes) {
     const method = route.method.toLowerCase() as keyof typeof app;
     app[method](route.path, async (req: Request, res: Response) => {
-      const controller = container.get<ActionInterface>(TYPES[route.action]);
+      const controller = (await container[route.action]()) as ActionInterface;
       await controller.execute(req, res);
     });
   }
