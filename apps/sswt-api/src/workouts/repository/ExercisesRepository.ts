@@ -1,7 +1,7 @@
 import { PrismaClient } from "@prisma/client";
 import { createExerciseDto, Exercise } from "src/workouts/dto/Exercise";
 
-export class ExerciseRepository {
+export class ExercisesRepository {
   constructor(private readonly db: PrismaClient) {}
 
   async create(workoutId: number, name: string): Promise<Exercise> {

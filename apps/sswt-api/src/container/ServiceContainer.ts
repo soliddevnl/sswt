@@ -3,7 +3,7 @@ import { UserContext } from "src/workouts/context/UserContext";
 import { WorkoutRepository } from "src/workouts/repository/WorkoutRepository";
 import { DummyUserContext } from "src/workouts/context/DummyUserContext";
 import { PrismaClient } from "@prisma/client";
-import { ExerciseRepository } from "src/workouts/repository/ExerciseRepository";
+import { ExercisesRepository } from "src/workouts/repository/ExercisesRepository";
 import { GetWorkoutAction } from "src/workouts/action/GetWorkoutAction";
 import { CreateWorkoutAction } from "src/workouts/action/CreateWorkoutAction";
 import { UpdateWorkoutAction } from "src/workouts/action/UpdateWorkoutAction";
@@ -17,56 +17,35 @@ import { RemoveSetAction } from "src/workouts/action/RemoveSetAction";
 import { RemoveExerciseFromWorkoutAction } from "src/workouts/action/RemoveExerciseFromWorkoutAction";
 import { SetRepository } from "src/workouts/repository/SetRepository";
 
-export abstract class ServiceContainer {
-  public abstract getWorkoutAction(): Promise<GetWorkoutAction>;
-  public abstract createWorkoutAction(): Promise<CreateWorkoutAction>;
-  public abstract updateWorkoutAction(): Promise<UpdateWorkoutAction>;
-  public abstract removeWorkoutAction(): Promise<RemoveWorkoutAction>;
-  public abstract getExercisesAction(): Promise<GetExercisesAction>;
-  public abstract addExerciseToWorkoutAction(): Promise<AddExerciseToWorkoutAction>;
-  public abstract updateExerciseAction(): Promise<UpdateExerciseAction>;
-  public abstract getSetsAction(): Promise<GetSetsAction>;
-  public abstract addSetAction(): Promise<AddSetAction>;
-  public abstract updateSetAction(): Promise<UpdateSetAction>;
-  public abstract removeSetAction(): Promise<RemoveSetAction>;
-  public abstract removeExerciseFromWorkoutAction(): Promise<RemoveExerciseFromWorkoutAction>;
-  public abstract workoutRepository(): Promise<WorkoutRepository>;
-  public abstract exerciseRepository(): Promise<ExerciseRepository>;
-  public abstract setRepository(): Promise<SetRepository>;
-  public abstract userContext(): Promise<UserContext>;
-
-  protected abstract db(): Promise<PrismaClient>;
-}
-
 export type PublicServiceTypes = {
   // eslint-disable-next-line @typescript-eslint/ban-types
   [K in keyof ServiceContainer]: ServiceContainer[K] extends Function ? K : never;
 }[keyof ServiceContainer];
 
-export class ProductionServiceContainer extends ServiceContainer {
+export class ServiceContainer {
   private static dbConnection: PrismaClient;
 
   async addExerciseToWorkoutAction(): Promise<AddExerciseToWorkoutAction> {
     return new AddExerciseToWorkoutAction(await this.exerciseRepository());
   }
 
-  public async userContext(): Promise<UserContext> {
+  async userContext(): Promise<UserContext> {
     return new DummyUserContext(await this.db());
   }
 
   protected db(): Promise<PrismaClient> {
-    if (!ProductionServiceContainer.dbConnection) {
-      ProductionServiceContainer.dbConnection = new PrismaClient();
+    if (!ServiceContainer.dbConnection) {
+      ServiceContainer.dbConnection = new PrismaClient();
     }
-    return Promise.resolve(ProductionServiceContainer.dbConnection);
+    return Promise.resolve(ServiceContainer.dbConnection);
   }
 
-  public async workoutRepository(): Promise<WorkoutRepository> {
+  async workoutRepository(): Promise<WorkoutRepository> {
     return new WorkoutRepository(await this.db());
   }
 
-  public async exerciseRepository(): Promise<ExerciseRepository> {
-    return Promise.resolve(new ExerciseRepository(await this.db()));
+  public async exerciseRepository(): Promise<ExercisesRepository> {
+    return Promise.resolve(new ExercisesRepository(await this.db()));
   }
 
   async addSetAction(): Promise<AddSetAction> {

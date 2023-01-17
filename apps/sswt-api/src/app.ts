@@ -6,13 +6,13 @@ import bodyParser from "body-parser";
 import swaggerUi from "swagger-ui-express";
 
 import swaggerDocument from "open-api";
-import { ProductionServiceContainer, PublicServiceTypes } from "src/container/ServiceContainer";
+import { ServiceContainer, PublicServiceTypes } from "src/container/ServiceContainer";
 import { ActionInterface } from "src/workouts/action/ActionInterface";
 
 async function buildApp() {
   dotenv.config();
 
-  const container = new ProductionServiceContainer();
+  const container = new ServiceContainer();
 
   const app: Express = express();
   app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
