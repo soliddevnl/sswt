@@ -1,0 +1,17 @@
+{
+  "name": "sswt",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:soliddevnl/sswt.git",
+  "author": "Joost van Driel <joostvdriel@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "test": "vitest"
+  },
+  "devDependencies": {
+    "@testing-library/cypress": "^9.0.0",
+    "cypress": "^12.6.0",
+    "typescript": "^4.9.5",
+    "vitest": "^0.28.5"
+  }
+}
