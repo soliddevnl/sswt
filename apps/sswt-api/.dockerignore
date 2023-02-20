@@ -1,0 +1,16 @@
+node_modules
+yarn-error.log
+dist
+tests
+.env.test
+.eslintrc.js
+.gitignore
+.prettierignore
+.prettierrc.json
+docker-compose.yaml
+docker-compose.test.yaml
+jest.config.js
+jest-integration.config.js
+Makefile
+README.md
+setup-integration.ts
