@@ -6,7 +6,8 @@
   "author": "Joost van Driel <joostvdriel@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "test": "vitest"
+    "test": "vitest",
+    "test:acceptance": "cypress run"
   },
   "devDependencies": {
     "@testing-library/cypress": "^9.0.0",

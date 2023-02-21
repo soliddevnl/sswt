@@ -1,0 +1,40 @@
+name: Acceptance Stage
+
+on:
+    workflow_run:
+        workflows: ['Commit Stage']
+        types:
+            - completed
+
+jobs:
+    build:
+        runs-on: ubuntu-latest
+
+        services:
+            sswt_frontend:
+                image: 'soliddevnl/sswt-frontend:main'
+                ports:
+                    - 3000:3000
+
+            sswt_api:
+                image: 'soliddevnl/sswt-api:main'
+                ports:
+                    - 8000:8000
+
+            sswt_db:
+                image: 'postgres:9.6'
+                ports:
+                    - 5432:5432
+                env:
+                    POSTGRES_USER: sswt
+                    POSTGRES_PASSWORD: sswt
+                    POSTGRES_DB: sswt
+
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v1.2.0
+            - name: Acceptance Tests
+              run: yarn run test:acceptance
+              env:
+                  WEB_TRACKER_HOST: localhost
+                  WEB_TRACKER_PORT: 3000
