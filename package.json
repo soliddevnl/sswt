@@ -7,12 +7,13 @@
   "license": "MIT",
   "scripts": {
     "test": "vitest",
-    "test:acceptance": "cypress run"
+    "test:acceptance": "npx testcafe chrome:headless tests/acceptance/*.test.ts"
   },
   "devDependencies": {
-    "@testing-library/cypress": "^9.0.0",
-    "cypress": "^12.6.0",
     "typescript": "^4.9.5",
     "vitest": "^0.28.5"
+  },
+  "dependencies": {
+    "testcafe": "^2.3.1"
   }
 }

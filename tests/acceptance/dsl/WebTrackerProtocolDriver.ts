@@ -1,9 +1,12 @@
+import { t, fixture, Selector } from "testcafe";
+
 export class WebTrackerProtocolDriver {
   async visitTheApp() {
-    cy.visit("http://localhost:3000");
+    await t.openWindow("http://localhost:3000");
   }
 
   async confirmTheAppIsOpen() {
-    cy.title().should("eq", "Super Simple Workout Tracker");
+    const pageTitle = await Selector("title").textContent;
+    await t.expect(pageTitle).eql("Super Simple Workout Tracker");
   }
 }

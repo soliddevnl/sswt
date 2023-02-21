@@ -1,14 +1,24 @@
 name: Acceptance Stage
 
+#on:
+#    workflow_run:
+#        workflows: ['Commit Stage']
+#        types:
+#            - completed
+
 on:
-    workflow_run:
-        workflows: ['Commit Stage']
-        types:
-            - completed
+    push:
+        branches: [ main ]
+    pull_request:
+        branches: [ main ]
 
 jobs:
     build:
         runs-on: ubuntu-latest
+
+        strategy:
+            matrix:
+                node-version: [ 18.x ]
 
         services:
             sswt_frontend:
@@ -32,9 +42,18 @@ jobs:
 
         steps:
             - name: Checkout
-              uses: actions/checkout@v1.2.0
-            - name: Cypress run
-              uses: cypress-io/github-action@v5
+              uses: actions/checkout@v3
+
+            - name: Use Node.js ${{ matrix.node-version }}
+              uses: actions/setup-node@v3
+              with:
+                node-version: ${{ matrix.node-version }}
+
+            - name: Install Dependencies
+              run: yarn install --frozen-lockfile
+
+            - name: Run acceptance tests
+              run: yarn test-acceptance
               with:
                   wait-on: 'http://localhost:3000'
                   wait-on-timeout: 60
