@@ -5,7 +5,7 @@ export default function Home() {
   return (
     <div className={styles.container}>
       <Head>
-        <title>SSWT</title>
+        <title>Super Simple Workout Tracker</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
