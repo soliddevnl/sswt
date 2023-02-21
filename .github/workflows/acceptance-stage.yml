@@ -54,9 +54,6 @@ jobs:
 
             - name: Run acceptance tests
               run: yarn test-acceptance
-              with:
-                  wait-on: 'http://localhost:3000'
-                  wait-on-timeout: 60
               env:
                   WEB_TRACKER_HOST: http://localhost
                   WEB_TRACKER_PORT: 3000
