@@ -7,4 +7,5 @@ test("should visit the app", async () => {
   const testCase = new AcceptanceTestCase();
   await testCase.workoutTracker.visitTheApp();
   await testCase.workoutTracker.confirmTheAppIsOpen();
+  await testCase.workoutTracker.confirmTheWelcomeMessageFromTheApiIsShown();
 });

@@ -9,4 +9,8 @@ export class WebTrackerProtocolDriver {
     const pageTitle = await Selector("title").textContent;
     await t.expect(pageTitle).eql("Super Simple Workout Tracker");
   }
+
+  async confirmTheWelcomeMessageFromTheApiIsShown() {
+    await t.expect(Selector("h1").textContent).eql("Hello, Acceptance Tester!");
+  }
 }

@@ -16,6 +16,7 @@ import { UpdateSetAction } from "src/workouts/action/UpdateSetAction";
 import { RemoveSetAction } from "src/workouts/action/RemoveSetAction";
 import { RemoveExerciseFromWorkoutAction } from "src/workouts/action/RemoveExerciseFromWorkoutAction";
 import { SetRepository } from "src/workouts/repository/SetRepository";
+import { HelloAction } from "src/workouts/action/HelloAction";
 
 export type PublicServiceTypes = {
   // eslint-disable-next-line @typescript-eslint/ban-types
@@ -46,6 +47,10 @@ export class ServiceContainer {
 
   public async exerciseRepository(): Promise<ExercisesRepository> {
     return Promise.resolve(new ExercisesRepository(await this.db()));
+  }
+
+  async helloAction(): Promise<HelloAction> {
+    return Promise.resolve(new HelloAction());
   }
 
   async addSetAction(): Promise<AddSetAction> {

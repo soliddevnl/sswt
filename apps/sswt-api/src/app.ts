@@ -1,5 +1,6 @@
 import express, { Express, Request, Response } from "express";
 import dotenv from "dotenv";
+import cors from "cors";
 import { authorize } from "src/middleware/authorize";
 
 import bodyParser from "body-parser";
@@ -15,6 +16,7 @@ async function buildApp() {
   const container = new ServiceContainer();
 
   const app: Express = express();
+  app.use(cors());
   app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
   app.use(authorize);
   app.use(bodyParser.json());
@@ -36,6 +38,11 @@ async function buildApp() {
   type HttpMethod = "GET" | "POST" | "PUT" | "DELETE";
 
   const routes: Route[] = [
+    {
+      path: "/api/v1/hello",
+      method: "GET",
+      action: "helloAction",
+    },
     {
       path: "/api/v1/workouts/:workoutId/exercises/:exerciseId/sets",
       method: "GET",

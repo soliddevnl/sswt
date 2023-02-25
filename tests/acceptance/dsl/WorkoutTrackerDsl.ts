@@ -10,4 +10,8 @@ export class WorkoutTrackerDsl {
   async confirmTheAppIsOpen() {
     await this.driver.confirmTheAppIsOpen();
   }
+
+  async confirmTheWelcomeMessageFromTheApiIsShown() {
+    await this.driver.confirmTheWelcomeMessageFromTheApiIsShown();
+  }
 }

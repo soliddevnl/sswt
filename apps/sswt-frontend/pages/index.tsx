@@ -1,8 +1,21 @@
 import Head from "next/head";
 import styles from "../styles/Home.module.css";
 import Image from "next/image";
+import { useEffect, useState } from "react";
 
 export default function Home() {
+  const [welcomeMessage, setWelcomeMessage] = useState("Hello!");
+
+  useEffect(() => {
+    fetch("http://localhost:8000/api/v1/hello?name=Acceptance Tester", {
+      headers: {
+        Authorization: "Bearer test",
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => setWelcomeMessage(data.message));
+  });
+
   return (
     <div className={styles.container}>
       <Head>
@@ -11,9 +24,7 @@ export default function Home() {
       </Head>
 
       <main className={styles.main}>
-        <h1 className={styles.title}>
-          Welcome to <a href="https://nextjs.org">Next.js</a> on Docker!
-        </h1>
+        <h1 className={styles.title}>{welcomeMessage}</h1>
 
         <p className={styles.description}>
           Get started by editing{" "}
@@ -60,7 +71,13 @@ export default function Home() {
           rel="noopener noreferrer"
         >
           Powered by{" "}
-          <Image src="/vercel.svg" alt="Vercel Logo" className={styles.logo} />
+          <Image
+            src="/vercel.svg"
+            width="100"
+            height="100"
+            alt="Vercel Logo"
+            className={styles.logo}
+          />
         </a>
       </footer>
     </div>
