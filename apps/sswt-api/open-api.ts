@@ -485,7 +485,7 @@ export default {
     },
     {
       name: "Exercises",
-      description: "Exercise related operations",
+      description: "Exercise related operation",
     },
     {
       name: "Sets",
