@@ -18,8 +18,11 @@ jobs:
                 with:
                     node-version: '18.13.0'
 
-            -   name: Build app
+            -   name: Install dependencies
                 run: yarn install
+
+            -   name: Run linter
+                run: yarn lint
 
             -   name: Build app
                 run: yarn build
