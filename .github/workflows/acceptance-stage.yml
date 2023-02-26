@@ -62,4 +62,7 @@ jobs:
                   host: ${{ secrets.SSH_HOST }}
                   username: ${{ secrets.SSH_USER }}
                   key: ${{ secrets.SSH_KEY }}
-                  script: whoami
+                  script: |
+                      cd /var/www/sswt
+                      docker compose -f docker-compose.uat.yml pull
+                      docker compose -f docker-compose.uat.yml up -d
