@@ -64,5 +64,7 @@ jobs:
                   key: ${{ secrets.SSH_KEY }}
                   script: |
                       cd ./sswt/.docker
+                      echo "NEXT_PUBLIC_API_URL=${{ vars.NEXT_PUBLIC_API_URL }}" > .env
+                      git pull
                       docker compose -f docker-compose.uat.yml pull
                       docker compose -f docker-compose.uat.yml up -d
