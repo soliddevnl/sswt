@@ -55,6 +55,8 @@ jobs:
 
             - name: Run acceptance tests
               run: yarn test:acceptance
+              env:
+                NEXT_PUBLIC_API_URL: http://localhost:8000
 
             - name: Deploy to UAT
               uses: appleboy/ssh-action@v0.1.7
