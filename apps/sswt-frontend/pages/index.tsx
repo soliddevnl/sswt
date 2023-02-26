@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import getConfig from "next/config";
 
 const { publicRuntimeConfig } = getConfig();
+console.log({ publicRuntimeConfig });
 const apiUrl = publicRuntimeConfig.apiUrl;
 
 export default function Home() {
