@@ -65,4 +65,5 @@ jobs:
                   script: |
                       cd ./sswt/.docker
                       docker compose -f docker-compose.uat.yml pull
+                      docker compose -f docker-compose.uat.yml down
                       docker compose -f docker-compose.uat.yml up -d
