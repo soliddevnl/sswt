@@ -7,11 +7,14 @@ export default function Home() {
   const [welcomeMessage, setWelcomeMessage] = useState("Hello!");
 
   useEffect(() => {
-    fetch("http://localhost:8000/api/v1/hello?name=Acceptance Tester", {
-      headers: {
-        Authorization: "Bearer test",
-      },
-    })
+    fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/api/v1/hello?name=Acceptance Tester`,
+      {
+        headers: {
+          Authorization: "Bearer test",
+        },
+      }
+    )
       .then((res) => res.json())
       .then((data) => setWelcomeMessage(data.message));
   });

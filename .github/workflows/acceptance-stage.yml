@@ -49,5 +49,12 @@ jobs:
             - name: Run acceptance tests
               run: yarn test:acceptance
               env:
-                  WEB_TRACKER_HOST: http://localhost
-                  WEB_TRACKER_PORT: 3000
+                  NEXT_PUBLIC_API_URL: http://localhost:8000
+
+            - name: Deploy to UAT
+              uses: appleboy/ssh-action@v0.1.7
+              with:
+                  host: ${{ secrets.SSH_HOST }}
+                  username: ${{ secrets.SSH_USER }}
+                  key: ${{ secrets.SSH_KEY }}
+                  script: whoami

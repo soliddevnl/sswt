@@ -2,3 +2,8 @@ sswt.soliddev.nl {
     reverse_proxy sswt_frontend:3000
     tls joost@soliddev.nl
 }
+
+sswt-api.soliddev.nl {
+    reverse_proxy sswt_api:8000
+    tls joost@soliddev.nl
+}

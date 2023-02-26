@@ -5,6 +5,13 @@ services:
         image: soliddevnl/sswt-frontend:main
         ports:
             - 3000:3000
+        environment:
+            - NEXT_PUBLIC_API_URL=https://sswt-api.soliddev.nl
+
+    sswt_api:
+        image: soliddevnl/sswt-api:main
+        ports:
+            - 8000:8000
 
     webserver:
         image: caddy:2.6-alpine
