@@ -24,6 +24,8 @@ jobs:
                 image: 'soliddevnl/sswt-frontend:main'
                 ports:
                     - 3000:3000
+                env:
+                    NEXT_PUBLIC_API_URL: http://localhost:8000
 
             sswt_api:
                 image: 'soliddevnl/sswt-api:main'
@@ -53,8 +55,6 @@ jobs:
 
             - name: Run acceptance tests
               run: yarn test:acceptance
-              env:
-                  NEXT_PUBLIC_API_URL: http://localhost:8000
 
             - name: Deploy to UAT
               uses: appleboy/ssh-action@v0.1.7
