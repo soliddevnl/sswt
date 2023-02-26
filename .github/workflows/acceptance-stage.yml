@@ -63,6 +63,6 @@ jobs:
                   username: ${{ secrets.SSH_USER }}
                   key: ${{ secrets.SSH_KEY }}
                   script: |
-                      cd /var/www/sswt
+                      cd ./sswt
                       docker compose -f docker-compose.uat.yml pull
                       docker compose -f docker-compose.uat.yml up -d
