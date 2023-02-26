@@ -25,7 +25,7 @@ jobs:
                 ports:
                     - 3000:3000
                 env:
-                    NEXT_PUBLIC_API_URL: http://localhost:8000
+                    API_URL: http://localhost:8000
 
             sswt_api:
                 image: 'soliddevnl/sswt-api:main'
@@ -55,8 +55,6 @@ jobs:
 
             - name: Run acceptance tests
               run: yarn test:acceptance
-              env:
-                NEXT_PUBLIC_API_URL: http://localhost:8000
 
             - name: Deploy to UAT
               uses: appleboy/ssh-action@v0.1.7
@@ -66,7 +64,7 @@ jobs:
                   key: ${{ secrets.SSH_KEY }}
                   script: |
                       cd ./sswt/.docker
-                      echo "NEXT_PUBLIC_API_URL=${{ vars.NEXT_PUBLIC_API_URL }}" > .env
+                      echo "API_URL=${{ vars.API_URL }}" > .env
                       git pull
                       docker compose -f docker-compose.uat.yml pull
                       docker compose -f docker-compose.uat.yml up -d

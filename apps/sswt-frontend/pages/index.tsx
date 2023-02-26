@@ -2,19 +2,20 @@ import Head from "next/head";
 import styles from "../styles/Home.module.css";
 import Image from "next/image";
 import { useEffect, useState } from "react";
+import getConfig from "next/config";
+
+const { publicRuntimeConfig } = getConfig();
+const apiUrl = publicRuntimeConfig.apiUrl;
 
 export default function Home() {
   const [welcomeMessage, setWelcomeMessage] = useState("Hello!");
 
   useEffect(() => {
-    fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/api/v1/hello?name=Acceptance Tester`,
-      {
-        headers: {
-          Authorization: "Bearer test",
-        },
-      }
-    )
+    fetch(`${apiUrl}/api/v1/hello?name=Acceptance Tester`, {
+      headers: {
+        Authorization: "Bearer test",
+      },
+    })
       .then((res) => res.json())
       .then((data) => setWelcomeMessage(data.message));
   });
