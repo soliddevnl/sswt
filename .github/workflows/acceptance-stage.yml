@@ -65,6 +65,6 @@ jobs:
                   script: |
                       cd ./sswt/.docker
                       echo "API_URL=${{ vars.API_URL }}" > .env
-                      git pull
+                      git pull git@github.com-sswt:soliddevnl/sswt.git
                       docker compose -f docker-compose.uat.yml pull
                       docker compose -f docker-compose.uat.yml up -d
