@@ -11,6 +11,6 @@ export class WebTrackerProtocolDriver {
   }
 
   async confirmTheWelcomeMessageFromTheApiIsShown() {
-    await t.expect(Selector("h1").textContent).eql("Hello, Acceptance Tester!");
+    await t.expect(Selector("h1").textContent).eql("Hello, UAT Tester!");
   }
 }

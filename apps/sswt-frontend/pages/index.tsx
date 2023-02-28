@@ -12,7 +12,7 @@ export default function Home() {
   const [welcomeMessage, setWelcomeMessage] = useState("Hello!");
 
   useEffect(() => {
-    fetch(`${apiUrl}/api/v1/hello?name=Acceptance Tester`, {
+    fetch(`${apiUrl}/api/v1/hello?name=UAT Tester`, {
       headers: {
         Authorization: "Bearer test",
       },
