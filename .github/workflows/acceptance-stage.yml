@@ -51,15 +51,24 @@ jobs:
             - name: Run acceptance tests
               run: yarn test:acceptance
 
-            - name: Deploy to UAT
+            - name: SCP the sswt-control folder to the server
+              uses: appleboy/scp-action@v0.0.1
+              with:
+                host: ${{ secrets.SSH_HOST }}
+                username: ${{ secrets.SSH_USER }}
+                key: ${{ secrets.SSH_KEY }}
+                source: "../../apps/sswt-control"
+                target: "./sswt/sswt-control"
+                args: "-r"
+
+            - name: Let sswt-control deploy the new version
               uses: appleboy/ssh-action@v0.1.7
               with:
                   host: ${{ secrets.SSH_HOST }}
                   username: ${{ secrets.SSH_USER }}
                   key: ${{ secrets.SSH_KEY }}
                   script: |
-                      cd ./sswt/.docker
+                      cd ./sswt/sswt-control
                       echo "API_URL=${{ vars.API_URL }}" > .env
-                      git pull git@github.com-sswt:soliddevnl/sswt.git
                       docker compose -f docker-compose.uat.yml pull
                       docker compose -f docker-compose.uat.yml up -d
