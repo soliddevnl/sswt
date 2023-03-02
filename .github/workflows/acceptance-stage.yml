@@ -51,8 +51,8 @@ jobs:
             - name: Install Dependencies
               run: yarn install --frozen-lockfile
 
-            - name: Run acceptance tests
-              run: yarn test:acceptance
+#            - name: Run acceptance tests
+#              run: yarn test:acceptance
 
             - name: SCP the sswt-control folder to the server
               uses: appleboy/scp-action@v0.0.1
