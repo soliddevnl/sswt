@@ -13,10 +13,6 @@ jobs:
     build:
         runs-on: ubuntu-latest
 
-        strategy:
-            matrix:
-                node-version: [ 18.x ]
-
         services:
             sswt_frontend:
                 image: 'soliddevnl/sswt-frontend:main'
