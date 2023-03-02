@@ -74,4 +74,5 @@ jobs:
                       cd ./sswt/sswt-control
                       echo "API_URL=${{ vars.API_URL }}" > .env
                       docker compose -f docker-compose.uat.yml pull
+                      docker compose -f docker-compose.uat.yml down
                       docker compose -f docker-compose.uat.yml up -d
