@@ -43,10 +43,10 @@ jobs:
             - name: Checkout
               uses: actions/checkout@v3
 
-            - name: Use Node.js ${{ matrix.node-version }}
+            - name: Use Node.js 18.x
               uses: actions/setup-node@v3
               with:
-                node-version: ${{ matrix.node-version }}
+                node-version: 18.x
 
             - name: Install Dependencies
               run: yarn install --frozen-lockfile
@@ -61,7 +61,7 @@ jobs:
                 username: ${{ secrets.SSH_USER }}
                 key: ${{ secrets.SSH_KEY }}
                 source: "apps/sswt-control/"
-                target: "./sswt/sswt-control"
+                target: "./sswt"
                 strip_components: 1
 
             - name: Let sswt-control deploy the new version
