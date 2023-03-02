@@ -62,6 +62,7 @@ jobs:
                 key: ${{ secrets.SSH_KEY }}
                 source: "apps/sswt-control/"
                 target: "./sswt/sswt-control"
+                strip_components: 1
 
             - name: Let sswt-control deploy the new version
               uses: appleboy/ssh-action@v0.1.7
