@@ -60,9 +60,8 @@ jobs:
                 host: ${{ secrets.SSH_HOST }}
                 username: ${{ secrets.SSH_USER }}
                 key: ${{ secrets.SSH_KEY }}
-                source: "../../apps/sswt-control"
+                source: "../../apps/sswt-control/"
                 target: "./sswt/sswt-control"
-                args: "-r"
 
             - name: Let sswt-control deploy the new version
               uses: appleboy/ssh-action@v0.1.7
