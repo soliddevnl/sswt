@@ -1,11 +1,14 @@
 name: Acceptance Stage
 
+#on:
+#    workflow_run:
+#        workflows: ['Commit Stage']
+#        types:
+#            - completed
 on:
-    workflow_run:
-        workflows: ['Commit Stage']
-        types:
-            - completed
-
+    push:
+        branches:
+            - main
 jobs:
     build:
         runs-on: ubuntu-latest
