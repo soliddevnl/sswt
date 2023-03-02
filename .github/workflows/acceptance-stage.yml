@@ -55,7 +55,7 @@ jobs:
 #              run: yarn test:acceptance
 
             - name: SCP the sswt-control folder to the server
-              uses: appleboy/scp-action@v0.0.1
+              uses: appleboy/scp-action@v0.1.3
               with:
                 host: ${{ secrets.SSH_HOST }}
                 username: ${{ secrets.SSH_USER }}
