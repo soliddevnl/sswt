@@ -1,11 +1,13 @@
 import { useEffect, useState } from "react";
 import "./App.css";
+import { getConfig } from "../config";
+const config = getConfig();
 
 function App() {
   const [message, setMessage] = useState("Hello!");
 
   useEffect(() => {
-    fetch(`${import.meta.env.VITE_API_URL}/api/v1/hello?name=UAT Tester`, {
+    fetch(`${config.apiUrl}/api/v1/hello?name=UAT Tester`, {
       headers: {
         Authorization: `Bruh`,
       },
