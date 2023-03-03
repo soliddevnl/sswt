@@ -13,62 +13,50 @@ jobs:
     build:
         runs-on: ubuntu-latest
 
-        services:
-            sswt_frontend:
-                image: 'soliddevnl/sswt-frontend:main'
-                ports:
-                    - 3000:3000
-                env:
-                    API_URL: http://localhost:8000
-
-            sswt_api:
-                image: 'soliddevnl/sswt-api:main'
-                ports:
-                    - 8000:8000
-
-            sswt_db:
-                image: 'postgres:9.6'
-                ports:
-                    - 5432:5432
-                env:
-                    POSTGRES_USER: sswt
-                    POSTGRES_PASSWORD: sswt
-                    POSTGRES_DB: sswt
-
         steps:
-            - name: Checkout
-              uses: actions/checkout@v3
+            -   name: Checkout
+                uses: actions/checkout@v3
 
-            - name: Use Node.js 18.x
-              uses: actions/setup-node@v3
-              with:
-                node-version: 18.x
+            -   name: Create .env file for acceptance
+                run: |
+                    touch .env  
+                    echo "VITE_API_URL=http://localhost:8000" >> .env
+                shell: bash
 
-            - name: Install Dependencies
-              run: yarn install --frozen-lockfile
+            -   uses: isbang/compose-action@v1.4.1
+                with:
+                    compose-file: "./apps/sswt-control/docker-compose.acceptance.yml"
 
-#            - name: Run acceptance tests
-#              run: yarn test:acceptance
+            -   name: Use Node.js 18.x
+                uses: actions/setup-node@v3
+                with:
+                    node-version: 18.x
 
-            - name: SCP the sswt-control folder to the server
-              uses: appleboy/scp-action@v0.1.3
-              with:
-                host: ${{ secrets.SSH_HOST }}
-                username: ${{ secrets.SSH_USER }}
-                key: ${{ secrets.SSH_KEY }}
-                source: "apps/sswt-control/"
-                target: "./sswt"
-                strip_components: 1
+            -   name: Install Dependencies
+                run: yarn install --frozen-lockfile
 
-            - name: Let sswt-control deploy the new version
-              uses: appleboy/ssh-action@v0.1.7
-              with:
-                  host: ${{ secrets.SSH_HOST }}
-                  username: ${{ secrets.SSH_USER }}
-                  key: ${{ secrets.SSH_KEY }}
-                  script: |
-                      cd ./sswt/sswt-control
-                      echo "API_URL=${{ vars.API_URL }}" > .env
-                      docker compose -f docker-compose.uat.yml pull
-                      docker compose -f docker-compose.uat.yml down
-                      docker compose -f docker-compose.uat.yml up -d
+            -   name: Run acceptance tests
+                run: yarn test:acceptance
+
+            -   name: SCP the sswt-control folder to the server
+                uses: appleboy/scp-action@v0.1.3
+                with:
+                    host: ${{ secrets.SSH_HOST }}
+                    username: ${{ secrets.SSH_USER }}
+                    key: ${{ secrets.SSH_KEY }}
+                    source: "apps/sswt-control/"
+                    target: "./sswt"
+                    strip_components: 1
+
+            -   name: Let sswt-control deploy the new version
+                uses: appleboy/ssh-action@v0.1.7
+                with:
+                    host: ${{ secrets.SSH_HOST }}
+                    username: ${{ secrets.SSH_USER }}
+                    key: ${{ secrets.SSH_KEY }}
+                    script: |
+                        cd ./sswt/sswt-control
+                        echo "API_URL=${{ vars.API_URL }}" > .env
+                        docker compose -f docker-compose.uat.yml pull
+                        docker compose -f docker-compose.uat.yml down
+                        docker compose -f docker-compose.uat.yml up -d
