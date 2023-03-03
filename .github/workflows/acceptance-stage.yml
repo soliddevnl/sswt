@@ -19,7 +19,8 @@ jobs:
 
             -   name: Create .env file for acceptance
                 run: |
-                    touch .env  
+                    cd ./apps/sswt-control
+                    touch .env
                     echo "VITE_API_URL=http://localhost:8000" >> .env
                 shell: bash
 
